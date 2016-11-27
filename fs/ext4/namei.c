@@ -3552,8 +3552,6 @@ static int ext4_rename(struct inode *old_dir, struct dentry *old_dentry,
 	if (!old.bh || le32_to_cpu(old.de->inode) != old.inode->i_ino)
 		goto end_rename;
 
-<<<<<<< HEAD
-=======
 	if ((old.dir != new.dir) &&
 	    ext4_encrypted_inode(new.dir) &&
 	    !fscrypt_has_permitted_context(new.dir, old.inode)) {
@@ -3561,7 +3559,6 @@ static int ext4_rename(struct inode *old_dir, struct dentry *old_dentry,
 		goto end_rename;
 	}
 
->>>>>>> a5edcea7ae17... fscrypt: return -EXDEV for incompatible rename or link into encrypted dir
 	new.bh = ext4_find_entry(new.dir, &new.dentry->d_name,
 				 &new.de, &new.inlined);
 	if (IS_ERR(new.bh)) {
@@ -3726,8 +3723,6 @@ static int ext4_cross_rename(struct inode *old_dir, struct dentry *old_dentry,
 	u8 new_file_type;
 	int retval;
 
-<<<<<<< HEAD
-=======
 	if ((ext4_encrypted_inode(old_dir) &&
 	     !fscrypt_has_encryption_key(old_dir)) ||
 	    (ext4_encrypted_inode(new_dir) &&
@@ -3741,7 +3736,6 @@ static int ext4_cross_rename(struct inode *old_dir, struct dentry *old_dentry,
 	     !fscrypt_has_permitted_context(old_dir, new.inode)))
 		return -EXDEV;
 
->>>>>>> a5edcea7ae17... fscrypt: return -EXDEV for incompatible rename or link into encrypted dir
 	if ((ext4_test_inode_flag(new_dir, EXT4_INODE_PROJINHERIT) &&
 	     !projid_eq(EXT4_I(new_dir)->i_projid,
 			EXT4_I(old_dentry->d_inode)->i_projid)) ||
