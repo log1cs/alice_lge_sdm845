@@ -75,6 +75,42 @@ SYM_FUNC_START_WEAK_PI(memcpy)
 	ldp	D_l, D_h, [srcend, -16]
 	stp	A_l, A_h, [dstin]
 	stp	D_l, D_h, [dstend, -16]
+
+	.macro ldrb1 ptr, regB, val
+	ldrb  \ptr, [\regB], \val
+	.endm
+
+	.macro strb1 ptr, regB, val
+	strb \ptr, [\regB], \val
+	.endm
+
+	.macro ldrh1 ptr, regB, val
+	ldrh  \ptr, [\regB], \val
+	.endm
+
+	.macro strh1 ptr, regB, val
+	strh \ptr, [\regB], \val
+	.endm
+
+	.macro ldr1 ptr, regB, val
+	ldr \ptr, [\regB], \val
+	.endm
+
+	.macro str1 ptr, regB, val
+	str \ptr, [\regB], \val
+	.endm
+
+	.macro ldp1 ptr, regB, regC, val
+	ldp \ptr, \regB, [\regC], \val
+	.endm
+
+	.macro stp1 ptr, regB, regC, val
+	stp \ptr, \regB, [\regC], \val
+	.endm
+
+ENTRY(__memcpy)
+WEAK(memcpy)
+#include "copy_template.S"
 	ret
 
 	/* Copy 8-15 bytes.  */
