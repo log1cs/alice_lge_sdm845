@@ -10478,12 +10478,7 @@ static int ufshcd_devfreq_scale(struct ufs_hba *hba, bool scale_up)
 		goto scale_up_gear;
 	ufshcd_custom_cmd_log(hba, "Clk-freq-switched");
 
-	if (ufshcd_is_auto_hibern8_supported(hba)) {
-		ret = ufshcd_uic_hibern8_exit(hba);
-		if (ret)
-			goto scale_up_gear;
-		ufshcd_custom_cmd_log(hba, "Hibern8-Exited");
-	}
+	pm_runtime_get_sync(hba->dev);
 
 	/* scale up the gear after scaling up clocks */
 	if (scale_up) {
