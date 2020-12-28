@@ -7903,37 +7903,30 @@ static void ufshcd_tune_unipro_params(struct ufs_hba *hba)
 
 static void ufshcd_clear_dbg_ufs_stats(struct ufs_hba *hba)
 {
-	int err_reg_hist_size = sizeof(struct ufs_uic_err_reg_hist);
+	struct Scsi_Host *host;
+	struct ufs_hba *hba;
+	u32 pos;
+	int err;
+	u8 resp = 0xF, lun;
+	unsigned long flags;
 
-	memset(&hba->ufs_stats.pa_err, 0, err_reg_hist_size);
-	memset(&hba->ufs_stats.dl_err, 0, err_reg_hist_size);
-	memset(&hba->ufs_stats.nl_err, 0, err_reg_hist_size);
-	memset(&hba->ufs_stats.tl_err, 0, err_reg_hist_size);
-	memset(&hba->ufs_stats.dme_err, 0, err_reg_hist_size);
+	host = cmd->device->host;
+	hba = shost_priv(host);
 
-	hba->req_abort_count = 0;
-}
+	lun = ufshcd_scsi_to_upiu_lun(cmd->device->lun);
+	err = ufshcd_issue_tm_cmd(hba, lun, 0, UFS_LOGICAL_RESET, &resp);
+	if (err || resp != UPIU_TASK_MANAGEMENT_FUNC_COMPL) {
+		if (!err)
+			err = resp;
+		goto out;
+	}
 
-static void ufshcd_apply_pm_quirks(struct ufs_hba *hba)
-{
-	if (hba->dev_info.quirks & UFS_DEVICE_QUIRK_NO_LINK_OFF) {
-		if (ufs_get_pm_lvl_to_link_pwr_state(hba->rpm_lvl) ==
-		    UIC_LINK_OFF_STATE) {
-			hba->rpm_lvl =
-				ufs_get_desired_pm_lvl_for_dev_link_state(
-						UFS_SLEEP_PWR_MODE,
-						UIC_LINK_HIBERN8_STATE);
-			dev_info(hba->dev, "UFS_DEVICE_QUIRK_NO_LINK_OFF enabled, changed rpm_lvl to %d\n",
-				hba->rpm_lvl);
-		}
-		if (ufs_get_pm_lvl_to_link_pwr_state(hba->spm_lvl) ==
-		    UIC_LINK_OFF_STATE) {
-			hba->spm_lvl =
-				ufs_get_desired_pm_lvl_for_dev_link_state(
-						UFS_SLEEP_PWR_MODE,
-						UIC_LINK_HIBERN8_STATE);
-			dev_info(hba->dev, "UFS_DEVICE_QUIRK_NO_LINK_OFF enabled, changed spm_lvl to %d\n",
-				hba->spm_lvl);
+	/* clear the commands that were pending for corresponding LUN */
+	for_each_set_bit(pos, &hba->outstanding_reqs, hba->nutrs) {
+		if (hba->lrb[pos].lun == lun) {
+			err = ufshcd_clear_cmd(hba, pos);
+			if (err)
+				break;
 		}
 	}
 }
