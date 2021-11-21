@@ -19,7 +19,9 @@
  *
  * Alignment fixed up by hardware.
  */
-SYM_FUNC_START(__arch_clear_user)
+
+	.p2align 4
+ENTRY(__arch_clear_user)
 	uaccess_enable_not_uao x2, x3, x4
 	mov	x2, x1			// save the size for fixup return
 	subs	x1, x1, #8
