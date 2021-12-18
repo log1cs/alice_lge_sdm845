@@ -480,7 +480,6 @@ static void tcp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
 		else if (!test_and_set_bit(TCP_MTU_REDUCED_DEFERRED,
 					   &tp->tsq_flags))
 			sock_hold(sk);
-#endif
 		goto out;
 	}
 
