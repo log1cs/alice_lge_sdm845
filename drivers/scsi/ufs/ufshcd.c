@@ -1628,6 +1628,7 @@ start:
 			break;
 		}
 
+<<<<<<< HEAD
 		spin_unlock_irqrestore(hba->host->host_lock, flags);
 		flush_work(&hba->clk_gating.ungate_work);
 		/* Make sure state is CLKS_ON before returning */
@@ -1637,6 +1638,14 @@ start:
 		dev_err(hba->dev, "%s: clk gating is in invalid state %d\n",
 				__func__, hba->clk_gating.state);
 		break;
+=======
+	err = ufshcd_map_sg(hba, lrbp);
+	if (err) {
+		ufshcd_release(hba);
+		lrbp->cmd = NULL;
+		clear_bit_unlock(tag, &hba->lrb_in_use);
+		goto out;
+>>>>>>> v4.9.241
 	}
 	spin_unlock_irqrestore(hba->host->host_lock, flags);
 out:
@@ -7566,13 +7575,24 @@ static u32 ufshcd_get_max_icc_level(int sup_curr_uA, u32 start_scan, char *buff)
 static u32 ufshcd_find_max_sup_active_icc_level(struct ufs_hba *hba,
 							u8 *desc_buf, int len)
 {
+<<<<<<< HEAD
 	u32 icc_level = 0;
+=======
+	u32 intr_status, enabled_intr_status = 0;
+	irqreturn_t retval = IRQ_NONE;
+	struct ufs_hba *hba = __hba;
+	int retries = hba->nutrs;
+
+	spin_lock(hba->host->host_lock);
+	intr_status = ufshcd_readl(hba, REG_INTERRUPT_STATUS);
+>>>>>>> v4.9.241
 
 	/*
 	 * VCCQ rail is optional for removable UFS card and also most of the
 	 * vendors don't use this rail for embedded UFS devices as well. So
 	 * it is normal that VCCQ rail may not be provided for given platform.
 	 */
+<<<<<<< HEAD
 	if (!hba->vreg_info.vcc || !hba->vreg_info.vccq2) {
 		dev_err(hba->dev, "%s: Regulator capability was not set, bActiveICCLevel=%d\n",
 			__func__, icc_level);
@@ -7584,6 +7604,20 @@ static u32 ufshcd_find_max_sup_active_icc_level(struct ufs_hba *hba,
 				hba->vreg_info.vcc->max_uA,
 				POWER_DESC_MAX_ACTV_ICC_LVLS - 1,
 				&desc_buf[PWR_DESC_ACTIVE_LVLS_VCC_0]);
+=======
+	while (intr_status && retries--) {
+		enabled_intr_status =
+			intr_status & ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
+		if (intr_status)
+			ufshcd_writel(hba, intr_status, REG_INTERRUPT_STATUS);
+		if (enabled_intr_status) {
+			ufshcd_sl_intr(hba, enabled_intr_status);
+			retval = IRQ_HANDLED;
+		}
+
+		intr_status = ufshcd_readl(hba, REG_INTERRUPT_STATUS);
+	}
+>>>>>>> v4.9.241
 
 	if (hba->vreg_info.vccq && hba->vreg_info.vccq->max_uA)
 		icc_level = ufshcd_get_max_icc_level(
