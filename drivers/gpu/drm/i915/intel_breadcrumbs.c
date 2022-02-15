@@ -432,7 +432,7 @@ static void signaler_set_rtpriority(void)
 {
 	 struct sched_param param = { .sched_priority = 1 };
 
-	 sched_setscheduler_nocheck(current, SCHED_FIFO, &param);
+	 sched_setscheduler_nocheck(current, SCHED_RR, &param);
 }
 
 static int intel_breadcrumbs_signaler(void *arg)

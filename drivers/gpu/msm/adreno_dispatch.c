@@ -2515,7 +2515,7 @@ static int adreno_dispatcher_thread(void *data)
 	struct adreno_device *adreno_dev = data;
 	struct adreno_dispatcher *dispatcher = &adreno_dev->dispatcher;
 
-	sched_setscheduler_nocheck(current, SCHED_FIFO, &sched_rt_prio);
+	sched_setscheduler_nocheck(current, SCHED_RR, &sched_rt_prio);
 
 	while (1) {
 		bool should_stop;
