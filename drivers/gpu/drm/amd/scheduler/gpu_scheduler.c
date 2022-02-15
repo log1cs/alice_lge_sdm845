@@ -538,7 +538,7 @@ static int amd_sched_main(void *param)
 	struct amd_gpu_scheduler *sched = (struct amd_gpu_scheduler *)param;
 	int r, count;
 
-	sched_setscheduler(current, SCHED_FIFO, &sparam);
+	sched_setscheduler(current, SCHED_RR, &sparam);
 
 	while (!kthread_should_stop()) {
 		struct amd_sched_entity *entity = NULL;
