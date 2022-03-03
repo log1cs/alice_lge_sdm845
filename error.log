@@ -1,0 +1,153 @@
+make[1]: Entering directory '/mnt/data/kernel/out'
+  GEN     ./Makefile
+scripts/kconfig/conf  --silentoldconfig Kconfig
+  CHK     include/config/kernel.release
+  GEN     ./Makefile
+  CHK     include/generated/uapi/linux/version.h
+  Using .. as source for kernel
+  CHK     include/generated/utsrelease.h
+  CHK     scripts/mod/devicetable-offsets.h
+  CHK     include/generated/timeconst.h
+  CHK     include/generated/bounds.h
+  CHK     include/generated/asm-offsets.h
+  CALL    ../scripts/checksyscalls.sh
+  CHK     include/generated/compile.h
+  GZIP    kernel/config_data.gz
+  CHK     kernel/config_data.h
+  CC      drivers/usb/gadget/function/rndis.o
+  CC      drivers/usb/serial/usb-serial.o
+  DTC     arch/arm64/boot/dts/lge/sdm845-v2.1-judyln_lao_com_kr_rev-b-overlay.dtbo
+  DTC     arch/arm64/boot/dts/lge/sdm845-v2.1-judyln_lao_com_rev-a-overlay.dtbo
+  CC      drivers/usb/gadget/function/storage_common.o
+  DTC     arch/arm64/boot/dts/lge/sdm845-v2.1-judyln_lao_com_rev-b-overlay.dtbo
+  CC      drivers/usb/serial/generic.o
+  DTC     arch/arm64/boot/dts/lge/sdm845-v2-judyln_lao_com_kr_rev-0.0-overlay.dtbo
+  CC      drivers/usb/gadget/function/f_fs.o
+  DTC     arch/arm64/boot/dts/lge/sdm845-v2.1-judyln_lao_com_kr_rev-1.0-overlay.dtbo
+  CC      drivers/usb/serial/bus.o
+  DTC     arch/arm64/boot/dts/lge/sdm845-v2.1-judyln_lao_com_kr_rev-c-overlay.dtbo
+  CC      drivers/usb/serial/ftdi_sio.o
+  DTC     arch/arm64/boot/dts/lge/sdm845-v2.1-judyln_lao_com_rev-1.0-overlay.dtbo
+  DTC     arch/arm64/boot/dts/lge/sdm845-v2.1-judyln_lao_com_kr_rev-a-overlay.dtbo
+  CC      drivers/usb/serial/pl2303.o
+  DTC     arch/arm64/boot/dts/lge/sdm845-v2-judyln_lao_com_rev-0.0-overlay.dtbo
+  CC      drivers/usb/gadget/function/f_midi.o
+  LD      drivers/usb/serial/usbserial.o
+  LD      drivers/usb/serial/built-in.o
+  CC      drivers/usb/storage/scsiglue.o
+  DTC     arch/arm64/boot/dts/lge/sdm845-v2.1-judyln_lao_com_rev-c-overlay.dtbo
+  CC      drivers/usb/gadget/function/f_hid.o
+  CC      drivers/usb/gadget/function/f_mtp.o
+  CC      drivers/usb/storage/protocol.o
+  CC      drivers/usb/gadget/function/f_ptp.o
+  CC      drivers/usb/gadget/function/f_audio_source.o
+  CC      drivers/usb/gadget/function/f_accessory.o
+  CC      drivers/usb/storage/transport.o
+  CC      drivers/usb/gadget/function/f_diag.o
+  CC      drivers/usb/gadget/function/f_cdev.o
+  CC      drivers/usb/storage/usb.o
+  CC      drivers/usb/gadget/function/f_gsi.o
+  CC      drivers/usb/gadget/function/f_ccid.o
+  CC      drivers/usb/gadget/function/f_qdss.o
+  CC      drivers/usb/gadget/function/u_qdss.o
+  CC      drivers/usb/gadget/function/f_laf.o
+  CC      drivers/usb/storage/initializers.o
+  LD      drivers/usb/gadget/function/usb_f_mass_storage.o
+  LD      drivers/usb/gadget/function/usb_f_fs.o
+  LD      drivers/usb/gadget/function/usb_f_midi.o
+  LD      drivers/usb/gadget/function/usb_f_hid.o
+  LD      drivers/usb/gadget/function/usb_f_mtp.o
+  LD      drivers/usb/gadget/function/usb_f_ptp.o
+  LD      drivers/usb/gadget/function/usb_f_audio_source.o
+  LD      drivers/usb/gadget/function/usb_f_accessory.o
+  LD      drivers/usb/gadget/function/usb_f_diag.o
+  LD      drivers/usb/gadget/function/usb_f_cdev.o
+  LD      drivers/usb/gadget/function/usb_f_ccid.o
+  LD      drivers/usb/gadget/function/usb_f_qdss.o
+  CC      drivers/usb/storage/sierra_ms.o
+  CC      drivers/usb/storage/option_ms.o
+  LD      drivers/usb/gadget/function/usb_f_gsi.o
+  CC      drivers/usb/storage/usual-tables.o
+  LD      drivers/usb/gadget/function/usb_f_laf.o
+  LD      drivers/usb/gadget/function/built-in.o
+  LD      drivers/usb/gadget/built-in.o
+  CC      drivers/usb/storage/alauda.o
+  CC      drivers/usb/storage/cypress_atacb.o
+  CC      drivers/usb/storage/datafab.o
+  CC      drivers/usb/storage/freecom.o
+  CC      drivers/usb/storage/isd200.o
+  CC      drivers/usb/storage/jumpshot.o
+  CC      drivers/usb/storage/karma.o
+  CC      drivers/usb/storage/onetouch.o
+  CC      drivers/usb/storage/realtek_cr.o
+  CC      drivers/usb/storage/sddr09.o
+  CC      drivers/usb/storage/sddr55.o
+  CC      drivers/usb/storage/shuttle_usbat.o
+  LD      drivers/usb/storage/usb-storage.o
+  LD      drivers/usb/storage/ums-alauda.o
+  LD      drivers/usb/storage/ums-cypress.o
+  LD      drivers/usb/storage/ums-datafab.o
+  LD      drivers/usb/storage/ums-freecom.o
+  LD      drivers/usb/storage/ums-isd200.o
+  LD      drivers/usb/storage/ums-jumpshot.o
+  LD      drivers/usb/storage/ums-karma.o
+  LD      drivers/usb/storage/ums-onetouch.o
+  LD      drivers/usb/storage/ums-realtek.o
+  LD      drivers/usb/storage/ums-sddr55.o
+  LD      drivers/usb/storage/ums-usbat.o
+  LD      drivers/usb/storage/ums-sddr09.o
+  LD      drivers/usb/storage/built-in.o
+  LD      drivers/usb/built-in.o
+  LD      drivers/built-in.o
+  GEN     .version
+  LD      vmlinux.o
+  MODPOST vmlinux.o
+  CHK     include/generated/compile.h
+  UPD     include/generated/compile.h
+  CC      init/version.o
+  LD      init/built-in.o
+  KSYM    .tmp_kallsyms1.o
+  KSYM    .tmp_kallsyms2.o
+  LD      vmlinux
+  SORTEX  vmlinux
+  SYSMAP  System.map
+  OBJCOPY arch/arm64/boot/Image
+  DTC     arch/arm64/boot/dts/qcom/sdm845.dtb
+  DTC     arch/arm64/boot/dts/qcom/sdm845-v2.1.dtb
+  Building modules, stage 2.
+  MODPOST 14 modules
+  CC      drivers/char/rdbg.mod.o
+  DTC     arch/arm64/boot/dts/qcom/sdm845-v2.dtb
+  CC      drivers/media/platform/msm/broadcast/tspp.mod.o
+  CC      drivers/media/platform/msm/dvb/adapter/mpq-adapter.mod.o
+  CC      drivers/media/platform/msm/dvb/demux/mpq-dmx-hw-plugin.mod.o
+  GZIP    arch/arm64/boot/Image.gz
+  CC      drivers/media/usb/gspca/gspca_main.mod.o
+  CC      drivers/mmc/card/mmc_test.mod.o
+  CC      drivers/net/wireless/ath/wil6210/wil6210.mod.o
+  CC      drivers/platform/msm/msm_11ad/msm_11ad_proxy.mod.o
+  CC      drivers/soc/qcom/llcc_perfmon.mod.o
+  CC      drivers/video/backlight/lcd.mod.o
+  CC      net/bridge/br_netfilter.mod.o
+  CC      net/ipv4/tcp_htcp.mod.o
+  CC      net/ipv4/tcp_westwood.mod.o
+  CC      net/netfilter/interceptor_v38/vpnclient.mod.o
+  LD [M]  drivers/char/rdbg.ko
+  LD [M]  drivers/media/platform/msm/broadcast/tspp.ko
+  LD [M]  drivers/media/platform/msm/dvb/adapter/mpq-adapter.ko
+  LD [M]  drivers/media/platform/msm/dvb/demux/mpq-dmx-hw-plugin.ko
+  LD [M]  drivers/media/usb/gspca/gspca_main.ko
+  LD [M]  drivers/mmc/card/mmc_test.ko
+  LD [M]  drivers/net/wireless/ath/wil6210/wil6210.ko
+  LD [M]  drivers/platform/msm/msm_11ad/msm_11ad_proxy.ko
+  LD [M]  drivers/soc/qcom/llcc_perfmon.ko
+  LD [M]  drivers/video/backlight/lcd.ko
+  LD [M]  net/bridge/br_netfilter.ko
+  LD [M]  net/ipv4/tcp_htcp.ko
+  LD [M]  net/ipv4/tcp_westwood.ko
+  LD [M]  net/netfilter/interceptor_v38/vpnclient.ko
+  CAT     arch/arm64/boot/Image.gz-dtb
+make[1]: Leaving directory '/mnt/data/kernel/out'
+
+[0;32m#### build completed successfully (39 seconds) ####[00m
+
