@@ -554,7 +554,6 @@ int ion_walk_heaps(struct ion_client *client, int heap_id,
 
 struct ion_handle *ion_handle_get_by_id_nolock(struct ion_client *client,
 					       int id);
-
 int ion_handle_put(struct ion_handle *handle);
 
 void show_ion_usage(struct ion_device *dev);
