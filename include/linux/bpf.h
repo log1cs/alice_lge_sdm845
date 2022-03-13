@@ -360,8 +360,10 @@ static inline void bpf_long_memcpy(void *dst, const void *src, u32 size)
 /* verify correctness of eBPF program */
 int bpf_check(struct bpf_prog **fp, union bpf_attr *attr);
 
-struct bpf_prog *bpf_prog_get_type_path(const char *name, enum bpf_prog_type type);
-
+static inline bool unprivileged_ebpf_enabled(void)
+{
+	return !sysctl_unprivileged_bpf_disabled;
+}
 #else
 static inline void bpf_register_prog_type(struct bpf_prog_type_list *tl)
 {
@@ -389,16 +391,12 @@ static inline struct bpf_prog *bpf_prog_inc(struct bpf_prog *prog)
 {
 	return ERR_PTR(-EOPNOTSUPP);
 }
-static inline int bpf_obj_get_user(const char __user *pathname)
+
+static inline bool unprivileged_ebpf_enabled(void)
 {
-	return -EOPNOTSUPP;
+	return false;
 }
 
-static inline struct bpf_prog *bpf_prog_get_type_path(const char *name,
-				enum bpf_prog_type type)
-{
-	return ERR_PTR(-EOPNOTSUPP);
-}
 #endif /* CONFIG_BPF_SYSCALL */
 
 /* verifier prototypes for helper functions called from eBPF programs */
