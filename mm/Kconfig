@@ -103,6 +103,7 @@ config HAVE_MEMORY_PRESENT
 config SPARSEMEM_STATIC
 	bool
 
+
 #
 # Architecture platforms which require a two level mem_section in SPARSEMEM
 # must select this option. This is usually for architecture platforms with
@@ -485,6 +486,15 @@ config CLEANCACHE
 	  in a negligible performance hit.
 
 	  If unsure, say Y to enable cleancache
+
+config OPLUS_MM_HACKS
+	bool "Enable oplus memory management hacks"
+	default n
+	help
+	  Improves memory management drastically as these hacks are used in Oplus devices.
+	  Tested on devices made by OEMs like Motorola and Samsung.
+
+	  If unsure, say "n".
 
 config FRONTSWAP
 	bool "Enable frontswap to cache swap pages if tmem is present"
