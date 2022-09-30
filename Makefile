@@ -566,7 +566,6 @@ KBUILD_CFLAGS += $(call cc-disable-warning, tautological-compare)
 # See modpost pattern 2
 KBUILD_CFLAGS += $(call cc-option, -mno-global-merge,)
 KBUILD_CFLAGS += $(call cc-option, -fcatch-undefined-behavior)
-endif
 
 ifneq ($(LLVM_IAS),1)
 CLANG_FLAGS	+= -no-integrated-as
