@@ -1470,11 +1470,10 @@ static int tfa98xx_dbgfs_pga_gain_get(void *data, u64 *val)
 {
 	struct i2c_client *i2c = (struct i2c_client *)data;
 	struct tfa98xx *tfa98xx = i2c_get_clientdata(i2c);
-	int err;
 	unsigned int value;
 
 /*	*val = TFA_GET_BF(tfa98xx->handle, SAAMGAIN);*/
-	err = regmap_read(tfa98xx->regmap, TFA98XX_CTRL_SAAM_PGA, &value);
+	int err = regmap_read(tfa98xx->regmap, TFA98XX_CTRL_SAAM_PGA, &value);
 	*val = (value & TFA98XX_CTRL_SAAM_PGA_SAAMGAIN_MSK) >>
 				TFA98XX_CTRL_SAAM_PGA_SAAMGAIN_POS;
 	return 0;
@@ -1498,37 +1497,32 @@ static int tfa98xx_dbgfs_pga_gain_set(void *data, u64 val)
 }
 
 /* Direct registers access - provide register address in hex */
-#define TFA98XX_DEBUGFS_REG_SET(__reg)					\
-static int tfa98xx_dbgfs_reg_##__reg##_set(void *data, u64 val)		\
-{									\
-	struct i2c_client *i2c = (struct i2c_client *)data;		\
-	struct tfa98xx *tfa98xx = i2c_get_clientdata(i2c);		\
-	unsigned int ret, value;					\
-									\
-	ret = regmap_write(tfa98xx->regmap, 0x##__reg, (val & 0xffff));	\
-	value = val & 0xffff;						\
-	return 0;							\
-}									\
-static int tfa98xx_dbgfs_reg_##__reg##_get(void *data, u64 *val)	\
-{									\
-	struct i2c_client *i2c = (struct i2c_client *)data;		\
-	struct tfa98xx *tfa98xx = i2c_get_clientdata(i2c);		\
-	unsigned int value;						\
-	int ret;							\
-									\
-	ret = regmap_read(tfa98xx->regmap, 0x##__reg, &value);		\
-	*val = value;							\
-	return 0;							\
-}									\
-DEFINE_SIMPLE_ATTRIBUTE(tfa98xx_dbgfs_reg_##__reg##_fops, \
-			tfa98xx_dbgfs_reg_##__reg##_get, \
+#define TFA98XX_DEBUGFS_REG_SET(__reg)
+static int tfa98xx_dbgfs_reg_##__reg##_set(void *data, u64 val)
+{
+	struct i2c_client *i2c = (struct i2c_client *)data;
+	struct tfa98xx *tfa98xx = i2c_get_clientdata(i2c);
+        int ret = regmap_write(tfa98xx->regmap, 0x##__reg, int value = val & 0xffff);
+	return 0;
+}
+static int tfa98xx_dbgfs_reg_##__reg##_get(void *data, u64 *val) {
+	struct i2c_client *i2c = (struct i2c_client *)data;
+	struct tfa98xx *tfa98xx = i2c_get_clientdata(i2c);
+	unsigned int value;
+
+	int ret = regmap_read(tfa98xx->regmap, 0x##__reg, &value);
+	*val = value;
+	return 0;
+}
+DEFINE_SIMPLE_ATTRIBUTE(tfa98xx_dbgfs_reg_##__reg##_fops,
+			tfa98xx_dbgfs_reg_##__reg##_get,
 			tfa98xx_dbgfs_reg_##__reg##_set, "0x%llx\n")
 
 #define VAL(str) #str
 #define TOSTRING(str) VAL(str)
-#define TFA98XX_DEBUGFS_REG_CREATE_FILE(__reg, __name)				\
-	debugfs_create_file(TOSTRING(__reg) "-" TOSTRING(__name),	\
-					S_IRUGO|S_IWUSR|S_IWGRP, dbg_reg_dir,	\
+#define TFA98XX_DEBUGFS_REG_CREATE_FILE(__reg, __name)
+	debugfs_create_file(TOSTRING(__reg) "-" TOSTRING(__name),
+					S_IRUGO|S_IWUSR|S_IWGRP, dbg_reg_dir,
 					i2c, &tfa98xx_dbgfs_reg_##__reg##_fops);
 
 TFA98XX_DEBUGFS_REG_SET(00);
@@ -1627,7 +1621,6 @@ static const struct file_operations tfa98xx_dbgfs_spkr_damaged_fops = {
 static void tfa98xx_debug_init(struct tfa98xx *tfa98xx, struct i2c_client *i2c)
 {
 	char name[50];
-	struct dentry *dbg_reg_dir;
 
 	scnprintf(name, MAX_CONTROL_NAME, "%s-%x", i2c->name, i2c->addr);
 	tfa98xx->dbg_dir = debugfs_create_dir(name, NULL);
@@ -1660,7 +1653,7 @@ static void tfa98xx_debug_init(struct tfa98xx *tfa98xx, struct i2c_client *i2c)
 
 	/* Direct registers access */
 	if (tfa98xx->flags & TFA98XX_FLAG_TFA9890_FAM_DEV) {
-		dbg_reg_dir = debugfs_create_dir("regs", tfa98xx->dbg_dir);
+		struct dentry *dbg_reg_dir = debugfs_create_dir("regs", tfa98xx->dbg_dir);
 		TFA98XX_DEBUGFS_REG_CREATE_FILE(00, STATUS);
 		TFA98XX_DEBUGFS_REG_CREATE_FILE(01, BATTERYVOLTAGE);
 		TFA98XX_DEBUGFS_REG_CREATE_FILE(02, TEMPERATURE);
@@ -4682,4 +4675,3 @@ module_exit(tfa98xx_i2c_exit);
 
 MODULE_DESCRIPTION("ASoC TFA98XX driver");
 MODULE_LICENSE("GPL");
-
